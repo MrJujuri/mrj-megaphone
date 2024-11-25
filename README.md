@@ -10,8 +10,7 @@ Configuration Settings
 * Vehicle Classes :
 The configuration includes vehicle classes that can be customized. The current classes available in the script are:
 
-18 - Emergency Vehicles
-Uncomment or modify additional vehicle classes as needed. Example classes include:
+* 18 - Emergency Vehicles : Uncomment or modify additional vehicle classes as needed. Example classes include:
 
 * Framework-Specific Items
 For the QB-Core Framework:
@@ -21,7 +20,7 @@ For the ESX Framework:
 
 * megaphoneItem: The item used for megaphone functionality, typically defined in the ESX inventory system. Add it to your esx_inventory database if necessary.
 
-> [!NOTE]  
+> [!NOTE]  Other Example classe
 > 0 - Compacts  
 > 1 - Sedans  
 > 2 - SUVs  
