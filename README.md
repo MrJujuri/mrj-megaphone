@@ -1,4 +1,4 @@
-#Config Setup for FiveM Script
+# Config Setup for FiveM Script
 This repository provides a configuration file for a FiveM server using either qb-core or esx frameworks. The configuration allows customization of several server settings and vehicle class definitions, including megaphone items, vehicle classes, and forced proximity.
 
 Configuration Settings
