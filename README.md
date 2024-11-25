@@ -13,6 +13,14 @@ The configuration includes vehicle classes that can be customized. The current c
 18 - Emergency Vehicles
 Uncomment or modify additional vehicle classes as needed. Example classes include:
 
+* Framework-Specific Items
+For the QB-Core Framework:
+
+* megaphoneItem: The item used to trigger the megaphone, typically managed via ox_inventory. Make sure to add this item in your ox_inventory configuration.
+For the ESX Framework:
+
+* megaphoneItem: The item used for megaphone functionality, typically defined in the ESX inventory system. Add it to your esx_inventory database if necessary.
+
 > [!NOTE]  
 > 0 - Compacts  
 > 1 - Sedans  
@@ -37,14 +45,6 @@ Uncomment or modify additional vehicle classes as needed. Example classes includ
 > 20 - Commercial Vehicles  
 > 21 - Trains  
 > 22 - Trash Vehicles
-
-* Framework-Specific Items
-For the QB-Core Framework:
-
-* megaphoneItem: The item used to trigger the megaphone, typically managed via ox_inventory. Make sure to add this item in your ox_inventory configuration.
-For the ESX Framework:
-
-* megaphoneItem: The item used for megaphone functionality, typically defined in the ESX inventory system. Add it to your esx_inventory database if necessary.
 
 ox_inventory
 To add the megaphone item to the inventory:
