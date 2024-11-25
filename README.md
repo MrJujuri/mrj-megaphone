@@ -1,13 +1,13 @@
 # Config Setup for mrj-megaphone
 
 Configuration Settings
-General Settings
-debug: Set to false to disable debugging.
-framework: Choose between "qb-core" or "esx" for your server's framework.
-megaphoneItem: Defines the item used for the megaphone ("megaphone" by default).
-ForceVolume: Forces volume on certain actions, set to true to enable.
-ForcedProximity: Sets the proximity range for actions (default: 20.0).
-Vehicle Classes
+
+* debug: Set to false to disable debugging.
+* framework: Choose between "qb-core" or "esx" for your server's framework.
+* megaphoneItem: Defines the item used for the megaphone ("megaphone" by default).
+* ForceVolume: Forces volume on certain actions, set to true to enable.
+* ForcedProximity: Sets the proximity range for actions (default: 20.0).
+* Vehicle Classes :
 The configuration includes vehicle classes that can be customized. The current classes available in the script are:
 
 18 - Emergency Vehicles
