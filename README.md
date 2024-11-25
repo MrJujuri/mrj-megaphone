@@ -99,7 +99,6 @@ ox_inventory
 To add the megaphone item to the inventory:
 ```
 -- Add this to your ox_inventory items configuration
-Config.Items = {
     ["megaphone"] = {
         label = "Megaphone",
         weight = 500,
@@ -107,7 +106,6 @@ Config.Items = {
         image = "megaphone.png",
         description = "A loudspeaker for communication."
     },
-}
 
 ```
 esx_inventory
