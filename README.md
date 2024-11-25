@@ -102,7 +102,6 @@ To add the megaphone item to the inventory:
     ["megaphone"] = {
         label = "Megaphone",
         weight = 500,
-        type = "item",
         image = "megaphone.png",
         description = "A loudspeaker for communication."
     },
