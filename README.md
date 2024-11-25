@@ -46,8 +46,8 @@ For the ESX Framework:
 > 21 - Trains  
 > 22 - Trash Vehicles
 
-ox_inventory
-To add the megaphone item to the inventory:
+## ox_inventory
+### To add the megaphone item to the inventory:
 ```
 -- Add this to your ox_inventory items configuration
     ["megaphone"] = {
@@ -58,8 +58,8 @@ To add the megaphone item to the inventory:
     },
 
 ```
-esx_inventory
-For the megaphone item in the ESX framework, add the following to your ESX inventory database:
+## esx_inventory
+### For the megaphone item in the ESX framework, add the following to your ESX inventory database:
 ```
 -- Add this to your esx_inventory items table
 INSERT INTO items (`name`, `label`, `weight`, `rare`, `can_remove`, `price`) VALUES
