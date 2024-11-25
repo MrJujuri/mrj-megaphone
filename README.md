@@ -20,7 +20,7 @@ For the ESX Framework:
 
 * megaphoneItem: The item used for megaphone functionality, typically defined in the ESX inventory system. Add it to your esx_inventory database if necessary.
 
-> [!NOTE]  Other Example classe
+> [!NOTE]
 > 0 - Compacts  
 > 1 - Sedans  
 > 2 - SUVs  
