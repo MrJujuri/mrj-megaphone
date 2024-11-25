@@ -13,30 +13,30 @@ The configuration includes vehicle classes that can be customized. The current c
 18 - Emergency Vehicles
 Uncomment or modify additional vehicle classes as needed. Example classes include:
 
-[!NOTE]  
-0 - Compacts  
-1 - Sedans  
-2 - SUVs  
-3 - Coupes  
-4 - Muscle Cars  
-5 - Sports Cars  
-6 - Sports Classics  
-7 - Super Cars  
-8 - Motorcycles  
-9 - Off-road Vehicles  
-10 - Industrial Vehicles  
-11 - Utility Vehicles  
-12 - Vans  
-13 - Bicycles  
-14 - Boats  
-15 - Helicopters  
-16 - Planes  
-17 - Service Vehicles  
-18 - Emergency Vehicles  
-19 - Military Vehicles  
-20 - Commercial Vehicles  
-21 - Trains  
-22 - Trash Vehicles
+> [!NOTE]  
+> 0 - Compacts  
+> 1 - Sedans  
+> 2 - SUVs  
+> 3 - Coupes  
+> 4 - Muscle Cars  
+> 5 - Sports Cars  
+> 6 - Sports Classics  
+> 7 - Super Cars  
+> 8 - Motorcycles  
+> 9 - Off-road Vehicles  
+> 10 - Industrial Vehicles  
+> 11 - Utility Vehicles  
+> 12 - Vans  
+> 13 - Bicycles  
+> 14 - Boats  
+> 15 - Helicopters  
+> 16 - Planes  
+> 17 - Service Vehicles  
+> 18 - Emergency Vehicles  
+> 19 - Military Vehicles  
+> 20 - Commercial Vehicles  
+> 21 - Trains  
+> 22 - Trash Vehicles
 
 * Framework-Specific Items
 For the QB-Core Framework:
