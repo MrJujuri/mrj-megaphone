@@ -1,4 +1,4 @@
-# In-Developments
+# Release
 # Config Setup for mrj-megaphone
 
 Configuration Settings
