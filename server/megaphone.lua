@@ -53,7 +53,7 @@ else
     end)
 end
 
-RegisterNetEvent('megaphone:applySubmix', function(state)
-    DebugPrint("Submix state change: " .. (state and "enabled" or "disabled"))
-    TriggerClientEvent('megaphone:updateSubmixStatus', source, state)
+RegisterNetEvent('megaphone:applySubmix', function(bool)
+    DebugPrint("Submix state change: " .. (bool and "enabled" or "disabled"))
+    TriggerClientEvent('megaphone:updateSubmixStatus', -1, bool, source)
 end)

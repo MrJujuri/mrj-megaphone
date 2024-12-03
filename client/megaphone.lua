@@ -1,142 +1,84 @@
-local QBCore, ESX
-local usingMegaphone = false
-local filter
-
 local function DebugPrint(message)
     if Config.debug then
         print("[DEBUG]: " .. message)
     end
 end
 
-if Config.framework == "qb-core" then
-    QBCore = exports['qb-core']:GetCoreObject()
-    DebugPrint("Using QBCore framework.")
-elseif Config.framework == "esx" then
-    TriggerEvent('esx:getSharedObject', function(obj)
-        ESX = obj
-    end)
-    DebugPrint("Using ESX framework.")
-else
-    DebugPrint("Framework not recognized. Defaulting to standalone.")
+local function IsVehicleAllowed()
+    local playerPed = PlayerPedId()
+    if IsPedInAnyVehicle(playerPed, false) then
+        local vehicle = GetVehiclePedIsIn(playerPed, false)
+        local vehicleClass = GetVehicleClass(vehicle)
+        DebugPrint("Player vehicle class: " .. tostring(vehicleClass))
+        for _, class in ipairs(Config.vehicleClasses) do
+            if vehicleClass == class then
+                DebugPrint("Vehicle class allowed for megaphone.")
+                return true
+            end
+        end
+        DebugPrint("Vehicle class not allowed for megaphone.")
+        return false
+    end
+    DebugPrint("Player not in a vehicle.")
+    return true
 end
 
 local function DisableSubmix()
+    DebugPrint("Disabling submix...")
     if IsEntityPlayingAnim(PlayerPedId(), "molly@megaphone", "megaphone_clip", 3) then
         ExecuteCommand('e c')
+        DebugPrint("Stopped animation: megaphone_clip.")
     end
     TriggerServerEvent('megaphone:applySubmix', false)
-end
+    DebugPrint("Server event 'megaphone:applySubmix' triggered with state: false.")
+end 
 
-local function HasMegaphoneItem()
-    local hasItem = false
-    if Config.framework == 'qb-core' then
-        hasItem = QBCore.Functions.HasItem(Config.megaphoneItem)
-    elseif Config.framework == 'esx' then
-        ESX.TriggerServerCallback('esx:getPlayerData', function(playerData)
-            hasItem = playerData.items and playerData.items[Config.megaphoneItem]
-        end)
-    else
-        DebugPrint("Using megaphone in standalone mode.")
-        hasItem = true
+local usingMegaphone = false
+
+function UseMegaphone()
+    DebugPrint("UseMegaphone function called.")
+
+    if IsPedInAnyVehicle(PlayerPedId(), false) and not IsVehicleAllowed() then
+        lib.notify({
+            title = "Megaphone",
+            description = "You cannot use the megaphone in this type of vehicle.",
+            type = "error"
+        })
+        return
     end
-    return hasItem
-end
 
-local function UseMegaphone()
-    local playerPed = PlayerPedId()
-    DebugPrint("UseMegaphone function triggered.")
+    if usingMegaphone then 
+        DebugPrint("Megaphone is currently active. Disabling...")
+        DisableSubmix()
+    end
 
-    if IsPedInAnyVehicle(playerPed, false) then
-        local vehicle = GetVehiclePedIsIn(playerPed, false)
-        DebugPrint("Player is in a vehicle.")
-        
-        local vehicleClass = GetVehicleClass(vehicle)
-        DebugPrint("Vehicle Class: " .. vehicleClass)
+    usingMegaphone = not usingMegaphone
+    DebugPrint("Megaphone state toggled. New state: " .. tostring(usingMegaphone))
 
-        local isClassAllowed = false
-        for _, class in ipairs(Config.vehicleClasses) do
-            if class == vehicleClass then
-                isClassAllowed = true
-                break
-            end
-        end
-
-        if not isClassAllowed then
-            lib.notify({
-                title = "Megaphone",
-                description = "This vehicle class cannot use the megaphone.",
-                type = "error"
-            })
-            return
-        end
-
-        if not HasMegaphoneItem() then
-            lib.notify({
-                title = "Megaphone",
-                description = "You need to have a megaphone to use this feature.",
-                type = "error"
-            })
-            return
-        end
-
+    CreateThread(function()
         if usingMegaphone then
-            DisableSubmix()
-        else
+            DebugPrint("Enabling megaphone effect.")
             TriggerServerEvent('megaphone:applySubmix', true)
+            DebugPrint("Server event 'megaphone:applySubmix' triggered with state: true.")
         end
-        usingMegaphone = not usingMegaphone
 
-        CreateThread(function()
-            while usingMegaphone do
-                if not IsEntityPlayingAnim(playerPed, "molly@megaphone", "megaphone_clip", 3) then
-                    ExecuteCommand('e megaphone')
-                end
-                Wait(100)
+        while usingMegaphone do
+            if not IsEntityPlayingAnim(PlayerPedId(), "molly@megaphone", "megaphone_clip", 3) then
+                ExecuteCommand('e megaphone')
+                DebugPrint("Animation 'megaphone_clip' started.")
             end
-        end)
-
-    else
-        if not HasMegaphoneItem() then
-            lib.notify({
-                title = "Megaphone",
-                description = "You need to have a megaphone to use this feature.",
-                type = "error"
-            })
-            return
+            Wait(100)
         end
-
-        if usingMegaphone then 
-            DisableSubmix()
-        end
-        usingMegaphone = not usingMegaphone
-
-        CreateThread(function()
-            while usingMegaphone do
-                if not IsEntityPlayingAnim(playerPed, "molly@megaphone", "megaphone_clip", 3) then
-                    ExecuteCommand('e megaphone')
-                end
-                Wait(100)
-            end
-        end)
-    end
+    end)
 end
 
 exports('UseMegaphone', UseMegaphone)
 
-RegisterNetEvent('megaphone:use', function()
-    DebugPrint("Megaphone event triggered.")
+RegisterNetEvent('megaphone:use')
+AddEventHandler('megaphone:use', function()
+    DebugPrint("Event 'megaphone:use' triggered.")
     UseMegaphone()
 end)
-
-RegisterKeyMapping('useMegaphone', 'Use Megaphone', 'keyboard', 'E')
-
-if Config.debug then
-    RegisterCommand('useMegaphone', function()
-        DebugPrint("Keybind triggered.")
-        UseMegaphone()
-    end, false)
-end
-
 
 local data = {
     [`default`] = 1,
@@ -149,29 +91,44 @@ local data = {
     [`o_freq_hi`] = 0.0,
 }
 
+local filter
+
 CreateThread(function()
+    DebugPrint("Initializing audio submix...")
     filter = CreateAudioSubmix("Megaphone")
     SetAudioSubmixEffectRadioFx(filter, 0)
+    DebugPrint("Audio submix 'Megaphone' created.")
+
     for hash, value in pairs(data) do
         SetAudioSubmixEffectParamInt(filter, 0, hash, 1)
+        DebugPrint("Audio submix parameter set: " .. tostring(hash) .. " = " .. tostring(value))
     end
+
     AddAudioSubmixOutput(filter, 0)
+    DebugPrint("Audio submix output added.")
 end)
 
 RegisterNetEvent('megaphone:updateSubmixStatus', function(state, source)
-    DebugPrint("Submix update: " .. (state and "enabled" or "disabled"))
+    DebugPrint("Event 'megaphone:updateSubmixStatus' triggered with state: " .. tostring(state) .. ", source: " .. tostring(source))
+
     if state then
         if Config.ForceVolume then
             MumbleSetVolumeOverrideByServerId(source, 0.90)
+            DebugPrint("Volume override set for source " .. tostring(source) .. " to 0.90.")
         end
         MumbleSetSubmixForServerId(source, filter)
+        DebugPrint("Submix set for source " .. tostring(source) .. ".")
         exports['pma-voice']:overrideProximityRange(Config.ForcedProximity, false)
+        DebugPrint("Proximity range overridden.")
     else
         MumbleSetSubmixForServerId(source, -1)
         if Config.ForceVolume then
             MumbleSetVolumeOverrideByServerId(source, -1.0)
+            DebugPrint("Volume override reset for source " .. tostring(source) .. ".")
         end
         exports['pma-voice']:clearProximityOverride()
+        DebugPrint("Proximity override cleared.")
         MumbleClearVoiceTargetPlayers(1.0)
+        DebugPrint("Voice target players cleared.")
     end
 end)
